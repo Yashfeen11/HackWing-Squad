@@ -16,7 +16,7 @@ Round 1 submission of Hack the Winter Hackathon
 - Team
 
 ## Problem Statement
-    In many cities and towns, a large amount of water is wasted either due to leakage in pipes or illegal water usage, i.e., theft.
+In many cities and towns, a large amount of water is wasted either due to leakage in pipes or illegal water usage, i.e., theft.
     These problems usually go unnoticed because there is no system that continuously monitors the following. 
 
 * How much water is flowing through pipelines
@@ -36,7 +36,7 @@ Round 1 submission of Hack the Winter Hackathon
 * Sends alerts when leakage or theft is suspected.
 
 # Proposed Solution
-    We are building a system that continuously monitors water distribution using a zone-based approach to detect leakage and unauthorized water usage.
+We are building a system that continuously monitors water distribution using a zone-based approach to detect leakage and unauthorized water usage.
 
 1) Continuously monitor inlet and outlet water flow for the respective zones (refer to pic-1).
     The entire water distribution pipeline is divided into multiple zones. Each zone is monitored independently, which gives a precise analysis of where the problem is present.
@@ -100,7 +100,7 @@ There are two cases now.
 
 3) The focus is on verifying system feasibility rather than full hardware deployment.
 
-    >For Round-1, sensor data is simulated to validate system logic.
+    > For Round-1, sensor data is simulated to validate system logic.
 
 ## Getting Started
 - Prerequisites: No physical hardware required for the prototype; simulation scripts are in the `simulation/` folder.
@@ -116,7 +116,8 @@ There are two cases now.
 3) `Gravity Analog Water Pressure Sensor` — Analog pressure sensor for measuring pipeline pressure levels.
 4) `YF-S201 Water Flow Meter` — Hall-effect flow meter used to measure volumetric water flow rate.
 
-    >NOTE: Hardware Integration is planned in later stage
+    > [!NOTE]
+    >Hardware Integration is planned in later stage
 
 ## TEAM HACKWING-SQUAD
 * MEMBER 1: YASHFEEN `TEAM LEADER`
