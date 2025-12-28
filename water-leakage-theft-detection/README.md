@@ -116,7 +116,6 @@ There are two cases now.
 3) `Gravity Analog Water Pressure Sensor` — Analog pressure sensor for measuring pipeline pressure levels.
 4) `YF-S201 Water Flow Meter` — Hall-effect flow meter used to measure volumetric water flow rate.
 
-    > [!NOTE]
     >Hardware Integration is planned in later stage
 
 ## TEAM HACKWING-SQUAD
