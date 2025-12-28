@@ -7,8 +7,8 @@ Round 1 submission of Hack the Winter Hackathon
     Iot & Automation
 
 ## Problem Statement
-    In many cities and town, a large amount of water is wasted either due to leakage in pipes and illegal water usage i.e theft
-    These problems usually go unnoticed because there is no system that continously monitors the following 
+    In many cities and towns, a large amount of water is wasted either due to leakage in pipes or illegal water usage, i.e., theft.
+    These problems usually go unnoticed because there is no system that continuously monitors the following. 
     -> How much water is flowing through pipelines
     ->Is there any kind of water loss through it 
 
@@ -17,40 +17,48 @@ Round 1 submission of Hack the Winter Hackathon
     2)Water theft is identified very late or not at all
 
     Consequences:
-    ->A lot of clean water is wasted because of that water scarcity problems become worse.
+    ->A lot of clean water is wasted because of that water scarcity problems becoming worse.
 
     What needs to be done?
-    ->An Iot Based system is needed that continously monitors water flow continously
+    ->An IoT-based system is needed that continuously monitors water flow.
     ->Compares expected and actual usage
     ->Detects abnormal patterns
     ->Sends alerts when leakage or theft is suspected.
 
 # Proposed Solution
-    We are building a solution that-
+    We are building a system that continuously monitors water distribution using a zone-based approach to detect leakage and unauthorized water usage.-
 
-    1->Continously Monitor the Inlet and the Outlet water flow monitoring for the respective zones (refer pic-1). The entire water distribution pipeline is divided into multiple zones. Each zone is moitored independently which gives a precise analysis of where the problem is present.
+    1->Continously Monitor the Inlet and the Outlet water flow monitoring for the respective zones (refer to pic-1). 
+    The entire water distribution pipeline is divided into multiple zones. Each zone is monitored independently, which gives a precise analysis of where the problem is present.
+    For every zone:
+    An inlet flow sensor measures the water entering the zone.
+    An outlet flow sensor measures the water being consumed.    
+    A pressure sensor monitors pipeline pressure.
+    This independent zone-wise monitoring helps localize problems effectively.
 
-    2->Baseline Condition-We calculate the difference between the inlet water quantity and outlet water quantity which gives us the basic infomation of the usage behavious of each zone.
-    During this phase we get the following outcomes:
+    2->Baseline Condition:-
+    Baseline is not just a difference; it is expected outlet behaviour over time and gives us a normal loss percentage.
+    We calculate the difference between the inlet water quantity and the outlet water quantity, which gives us the basic information on the usage behaviour of each zone.
+    During this phase, we get the following outcomes:
     a)Water flow and pressure data are collected at fixed time intervals (for example, every hour)
     b)Data is recorded over multiple days
     c)Average water usage patterns are calculated for different times of the day.
 
-    3->Once the baseline condition is established, the system continously compare the Real-Time Sensor Readings with the Expected Values that are derived from the data (extracted from point 2) which signifies whether there is a differnce between inlet and outlet flow for each time interval.
-    This differnce is compared with the Normal Loss Range
-    There are two cases now
-    CASE1-The differnce between the Real time and Expected Data is constant and the deviation is in acceptable limit the system marks it as an anomaly(We will examine it too)
-    CASE2-The difference between the Real Time and Expected Data is huge and discontinous. This will be examined too.
+    3->Once the baseline condition is established, the system continously compare the Real-Time Sensor Readings with the Expected Values that are derived from the data (extracted from point 2), which signifies whether there is a difference between inlet and outlet flow for each time interval.
+    This difference is compared with the Normal Loss Range.
+    There are two cases now.
+    CASE1-The difference between the Real time and Expected Data is constant, and the deviation is in acceptable limit, the system marks it as normal.
+    CASE2-The difference between the Real Time and Expected Data is huge and discontinous the system flags it as an anomaly for further analysis.
 
-    4->After detecting an anomoly the system applies behavior-based rules to classify the issue in two categories.
-    a)Leakage Detection:-Leakage is identified when water loss occurs continuously over a long duration, especially during low-usage periods such as night hours.
-    A gradual and stable loss pattern, often accompanied by a drop in water pressure, increases the confidence of leakage detection.
+    4->After detecting an anomoly the system applies behaviour-based rules to classify the issue into two categories.
+
+    a)Leakage Detection:-Leakage is identified when water loss occurs continuously over a long duration, especially during low-usage periods such as night hours. A gradual and stable loss pattern, often accompanied by a drop in water pressure, increases the confidence of leakage detection.
 
     b)Theft Detection:-Theft is identified when water loss appears suddenly for short durations and follows an irregular or spiky flow pattern.
     In such cases, pressure usually remains stable, indicating intentional water extraction rather than pipeline damage.
 
     5->Night Time Analysis:
-    Now to strengthen our claim and for complete accuracy.
+    Now, to strengthen our claim and for complete accuracy.
     The system uses time-based analysis to strengthen detection accuracy.
 
     During late-night hours, when water usage is expected to be minimal:
@@ -65,17 +73,25 @@ Round 1 submission of Hack the Winter Hackathon
     Since the system operates zone-wise, the affected area is automatically localized.
     This helps authorities or maintenance teams take faster and targeted action.
 
+    -->Our solution consits of structured layers that donot gives the output based on single assumptions, we recheck every situation based on various checkpoints that make us confident on analysing whether it is a leakage condition or theft condition.
+
+    6->Alert Generation and Localization
+
+    Once the system determines the probable cause:
+    An alert is generated with details such as zone, time, duration, and type of issue.
+    Since the system operates zone-wise, the affected area is automatically localized.
+    This helps authorities or maintenance teams take faster and targeted action.
+
     -->Our solution consits of structured layers that donot gives the output based on single assumptions, we recheck every situation based on various checkpoints that makes us confident on analysing whether it is a leakage condition or theft condition.
 
 ## Prototype Implementation(System Overview):
 
-    1)Sensor data which collects the inlet water and outlet water values and the pressure values is simulated using software to represent real-world flow and pressure values.
+   1)Sensor data, which collects the inlet water and outlet water values and the pressure values, is simulated using software to represent real-world flow and pressure values.
 
-    2)Software analyses patterns, The detection and classification logic is validated using multiple test scenarios.
+    2)Software analyses patterns. The detection and classification logic is validated using multiple test scenarios.
 
     3)The focus is on verifying system feasibility rather than full hardware deployment.
-
---->For Round-1, sensor data is simulated to validate system logic.<---
+    --->For Round-1, sensor data is simulated to validate system logic.<---
 
 ## Hardware Components(Used in Prototype):
     Flow sensors (Inlet / Outlet)
