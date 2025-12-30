@@ -15,6 +15,8 @@ Round 1 submission of Hack the Winter Hackathon
 - Data Format
 - Team
 
+> Note for Judges: Detailed detection algorithms, classification logic, and system assumptions are documented in the logic/ folder.
+
 ## Problem Statement
 In many cities and towns, a large amount of water is wasted either due to leakage in pipes or illegal water usage, i.e., theft.
     These problems usually go unnoticed because there is no system that continuously monitors the following. 
