@@ -1,26 +1,45 @@
 // index.js
 // Entry point for the Processing Engine
-// This module orchestrates baseline calculation and anomaly detection
+// Orchestrates baseline, anomaly detection, and classification
 
 const calculateBaseline = require('./baseline/BaselineCalculator');
 const detectAnomaly = require('./anomaly/anomalyDetector');
+const classify = require('./classification/classifier');
 
 /**
  * Analyse a new sensor reading using historical data
  *
  * @param {Object} currentReading - Latest sensor reading
  * @param {Array} historicalReadings - Past readings for baseline calculation
+ * @param {Number} duration - Duration (in minutes) for which anomaly persists
  *
  * @returns {Object} Analysis result
  */
-function analyse(currentReading, historicalReadings) {
-  // Step 1: Calculate baseline from historical data
+function analyse(currentReading, historicalReadings, duration = 0) {
+  // Step 1: Calculate baseline
   const baseline = calculateBaseline(historicalReadings);
 
-  // Step 2: Detect anomaly by comparing current reading with baseline
+  // Step 2: Detect anomaly
   const anomalyResult = detectAnomaly(currentReading, baseline);
 
-  // Step 3: Return structured analysis output
+  // Step 3: Default classification
+  let classificationResult = {
+    type: 'Normal',
+    confidence: 'High'
+  };
+
+  // Step 4: Classify ONLY if anomaly detected
+  if (anomalyResult.isAnomaly && baseline) {
+    classificationResult = classify({
+      inletFlow: currentReading.inletFlow,
+      outletFlow: currentReading.outletFlow,
+      pressure: currentReading.pressure,
+      baseline,
+      duration
+    });
+  }
+
+  // Step 5: Return structured output
   return {
     zone: currentReading.zone,
     timestamp: currentReading.timestamp || new Date(),
@@ -41,7 +60,9 @@ function analyse(currentReading, historicalReadings) {
       pressureDrop: anomalyResult.pressureDrop
         ? Number((anomalyResult.pressureDrop * 100).toFixed(2))
         : 0
-    }
+    },
+
+    classification: classificationResult
   };
 }
 
