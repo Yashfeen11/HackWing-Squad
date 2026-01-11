@@ -42,114 +42,110 @@ Round-2/
 ├── 📁 4.storage-dashboard/    # Express server & Web UI
 ├── 📁 system.architecture/     # DFDs and Architecture Diagrams
 └── 📁 Scalability-and-Failures/# Technical risk analysis
+```
 
 ---
 
+## 🔄 DATA FLOW EXPLANATION
 
-# =========================================================
-# 🔄 DATA FLOW EXPLANATION
-# =========================================================
 
-# ---------------------------------------------------------
-# 📊 DATA FLOW STAGES
-# ---------------------------------------------------------
+### 📊 DATA FLOW STAGES
+---
 
-# Stage 01: Simulation
-# Component: Simulation Engine
-# Technical Logic:
-# - Uses simulator.js
-# - Generates time-aware inlet and outlet flow values
-# - Simulates pressure levels
-# - Supports predefined scenarios:
-#   - Normal
-#   - Leak
-#   - Theft
+### Stage 01: Simulation
+#### Component: Simulation Engine
+**Technical Logic:**
+- Uses simulator.js
+- Generates time-aware inlet and outlet flow values
+- Simulates pressure levels
+- Supports predefined scenarios:
+  - Normal
+  - Leak
+  - Theft
 
-# Stage 02: Processing
-# Component: Processing Engine
-# Technical Logic:
-# - Compares real-time telemetry with historical baselines
-# - Calculates Flow Delta:
-#   Flow Delta = Inlet Flow - Outlet Flow
+### Stage 02: Processing
+#### Component: Processing Engine
+**Technical Logic:**
+- Compares real-time telemetry with historical baselines
+- Calculates Flow Delta:
+  Flow Delta = Inlet Flow - Outlet Flow
 
-# Stage 03: Classification
-# Component: Classification Engine
-# Decision Logic:
-# - Leakage:
-#   - High Flow Delta
-#   - Drop in Pressure
-# - Theft:
-#   - High Flow Delta
-#   - Consistent Pressure
-# - Normal:
-#   - Flow Delta within ±5% tolerance
+### Stage 03: Classification
+#### Component: Classification Engine
+**Decision Logic:**
+- Leakage:
+  - High Flow Delta
+  - Drop in Pressure
+- Theft:
+  - High Flow Delta
+  - Consistent Pressure
+- Normal:
+  - Flow Delta within ±5% tolerance
 
-# Stage 04: Storage
-# Component: Data Storage
-# Technical Logic:
-# - Pushes processed data to MongoDB
-# - Uses REST APIs
-# - Ensures persistence for historical trend dashboards
+### Stage 04: Storage
+#### Component: Data Storage
+**Technical Logic:**
+- Pushes processed data to MongoDB
+- Uses REST APIs
+- Ensures persistence for historical trend dashboards
 
-# ---------------------------------------------------------
-# 🚨 FAILURE HANDLING & SCALABILITY
-# ---------------------------------------------------------
+### 🚨 FAILURE HANDLING & SCALABILITY
+---
 
-# The system is designed to handle real-world constraints:
+The system is designed to handle real-world constraints:
 
-# Sensor Drift Handling:
-# - Kalman Filters are implemented
-# - Smooths noisy sensor data
+#### Sensor Drift Handling:
+- Kalman Filters are implemented
+- Smooths noisy sensor data
 
-# Network Latency Handling:
-# - Local caching mechanism
-# - Activates when database is unreachable
+#### Network Latency Handling:
+- Local caching mechanism
+- Activates when database is unreachable
 
-# Horizontal Scalability:
-# - Each module can scale independently:
-#   - Simulation
-#   - Processing
-#   - Storage
-# - Microservice-based deployment model
+#### Horizontal Scalability:
+- Each module can scale independently:
+  - Simulation
+  - Processing
+  - Storage
+- Microservice-based deployment model
 
-# Detailed Failure Analysis Reference:
-# Path: Round-2/Scalability-and-Failures/system-failures.md
+#### Detailed Failure Analysis Reference:
+Path: Round-2/Scalability-and-Failures/system-failures.md
 
-# ---------------------------------------------------------
-# 🧪 PROTOTYPE & DEMO
-# ---------------------------------------------------------
+### 🧪 PROTOTYPE & DEMO
+---
 
-# Simulator:
-# - Generates active telemetry
-# - Enables real-time testing scenarios
+#### Simulator:
+- Generates active telemetry
+- Enables real-time testing scenarios
 
-# Backend:
-# - Express.js server
-# - Handles:
-#   - Data ingestion
-#   - Alert triggering
+#### Backend:
+- Express.js server
+- Handles:
+  - Data ingestion
+  - Alert triggering
 
-# UI:
-# - Built using React and HTML
-# - Visual monitoring of:
-#   - Leak locations
-#   - System health metrics
+#### UI:
+- Built using HTML, CSS and JS
+- Visual monitoring of:
+  - Leak locations
+  - System health metrics
 
-# ---------------------------------------------------------
-# 👥 TEAM & COLLABORATION
-# ---------------------------------------------------------
+### 👥 TEAM & COLLABORATION
+---
 
-# Workflow:
-# - GitHub Feature-Branch strategy
-# - Peer-reviewed Pull Requests
+#### Workflow:
+- GitHub Feature-Branch strategy
+- Peer-reviewed Pull Requests
 
-# Design Principles:
-# - Strict Separation of Concerns (SoC)
-# - Enables independent component updates
+#### Design Principles:
+- Strict Separation of Concerns (SoC)
+- Enables independent component updates
 
-# Documentation:
-# - Modular README files
-# - Provided within each sub-directory
-# - Improves developer clarity and onboarding
-# =========================================================
+#### Documentation:
+- Modular README files
+- Provided within each sub-directory
+- Improves developer clarity and onboarding
+
+---
 
