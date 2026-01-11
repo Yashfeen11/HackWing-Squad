@@ -15,28 +15,16 @@ Each module is independently designed and mapped directly to the project folder 
 ## 🔁 High-Level System Architecture Flow
 
 
+## 🔁 High-Level System Architecture Flow
+
 ```mermaid
-flowchart TD
-    A[IoT Sensors / Simulator<br/>Flow & Pressure Data] --> B[Backend API<br/>Node.js + Express]
-
-    B --> C[Raw Data Storage<br/>MongoDB]
-
+flowchart LR
+    A[IoT Sensors / Simulator] --> B[Backend API]
+    B --> C[Database]
     C --> D[Processing Engine]
-    D --> D1[Baseline Calculation]
-    D --> D2[Anomaly Detection]
+    D --> E[Classification & Alerts]
+    E --> F[Dashboard]
 
-    D2 --> E[Classification Engine]
-    E --> E1[Leakage Detection]
-    E --> E2[Theft Detection]
-
-    E --> F[Alert Generator]
-    F --> F1[Severity Assignment]
-    F --> F2[Confidence Scoring]
-
-    F --> G[Alert Output<br/>(Simulated Alerts)]
-    G --> H[Dashboard UI]
-
-    C --> H
 
 ## 🧩 Component-wise Architecture Description
 
