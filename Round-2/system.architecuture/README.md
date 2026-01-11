@@ -15,9 +15,6 @@ Each module is independently designed and mapped directly to the project folder 
 ## 🔁 High-Level System Architecture Flow
 
 
-## 🔁 High-Level System Architecture Flow
-
-```mermaid
 flowchart LR
     A[IoT Sensors / Simulator] --> B[Backend API]
     B --> C[Database]
