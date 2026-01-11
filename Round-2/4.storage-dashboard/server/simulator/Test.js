@@ -6,21 +6,15 @@ const axios = require('axios');
 
 // Configuration
 const API_URL = 'http://localhost:5000/api/readings';
-// const INTERVAL_MS = 60000; // 1 minute
-const INTERVAL_MS = 10000/5; // 4 seconds (uncomment for faster demo)
+const INTERVAL_MS = 60000; // 1 minute
+// const INTERVAL_MS = 10000; // 10 seconds
 const ZONES = ['Zone A', 'Zone B', 'Zone C', 'Zone D'];
-
-// Demo cycle configuration
-const NORMAL_READINGS_COUNT = 3; // Send 3-4 normal readings
-const ALERT_READINGS_COUNT = 2;  // Then send 1-2 alert readings
 
 // Simulation state
 let simulatedHour = 0; // 0-23 hour format
 let simulatedMinute = 0;
 let currentMode = 'Normal'; // Normal, Leakage, Theft
-let readingCounter = 0; // Count readings in current mode
-let normalReadingsTarget = NORMAL_READINGS_COUNT; // Random 3-4
-let alertReadingsTarget = ALERT_READINGS_COUNT; // Random 1-2
+let modeTimer = 0; // Duration counter for current mode
 
 // Base values for normal operation
 const BASE_INLET = 600;
@@ -49,10 +43,17 @@ function advanceTime() {
 }
 
 /**
- * Generate random integer within range (inclusive)
+ * Check if current time is night (22:00 - 06:00)
  */
-function randomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+function isNightTime() {
+  return simulatedHour >= 22 || simulatedHour < 6;
+}
+
+/**
+ * Check if current time is early morning (01:00 - 05:00)
+ */
+function isLeakageTime() {
+  return simulatedHour >= 1 && simulatedHour < 5;
 }
 
 /**
@@ -71,33 +72,45 @@ function addVariation(value, percentage = 5) {
 }
 
 /**
- * Decide next operating mode for DEMO purposes
- * Cycles: 3-4 Normal → 1-2 Alerts (Leakage or Theft) → repeat
+ * Decide next operating mode based on time and probability
  */
 function decideMode() {
-  readingCounter += 1;
+  modeTimer += 1;
 
-  // If in Normal mode
-  if (currentMode === 'Normal') {
-    if (readingCounter >= normalReadingsTarget) {
-      // Switch to alert mode (randomly choose Leakage or Theft)
-      currentMode = Math.random() < 0.5 ? 'Leakage' : 'Theft';
-      readingCounter = 0;
-      alertReadingsTarget = randomInt(1, 2); // 1-2 alert readings
-      console.log(`🔄 Mode changed: Normal → ${currentMode} (will send ${alertReadingsTarget} alerts)`);
+  // If in theft mode, keep it for 10-30 minutes then return to normal
+  if (currentMode === 'Theft') {
+    if (modeTimer >= randomInRange(10, 30)) {
+      currentMode = 'Normal';
+      modeTimer = 0;
+      console.log('🔄 Mode changed: Theft → Normal');
     }
     return;
   }
 
-  // If in Leakage or Theft mode
-  if (currentMode === 'Leakage' || currentMode === 'Theft') {
-    if (readingCounter >= alertReadingsTarget) {
-      // Switch back to Normal mode
+  // If in leakage mode, keep it for 60-180 minutes then return to normal
+  if (currentMode === 'Leakage') {
+    if (modeTimer >= randomInRange(60, 180)) {
       currentMode = 'Normal';
-      readingCounter = 0;
-      normalReadingsTarget = randomInt(3, 4); // 3-4 normal readings
-      console.log(`🔄 Mode changed: Alert → Normal (will send ${normalReadingsTarget} normal readings)`);
+      modeTimer = 0;
+      console.log('🔄 Mode changed: Leakage → Normal');
     }
+    return;
+  }
+
+  // Normal mode - decide if should transition
+  // Leakage more likely during early morning (01:00 - 05:00)
+  if (isLeakageTime() && Math.random() < 0.15) {
+    currentMode = 'Leakage';
+    modeTimer = 0;
+    console.log('🔄 Mode changed: Normal → Leakage (Night time)');
+    return;
+  }
+
+  // Theft can happen randomly any time (5% chance per minute)
+  if (Math.random() < 0.05) {
+    currentMode = 'Theft';
+    modeTimer = 0;
+    console.log('🔄 Mode changed: Normal → Theft (Random spike)');
     return;
   }
 }
@@ -180,14 +193,15 @@ async function sendData(data) {
  */
 async function simulationLoop() {
   console.log(`\n⏰ [${getSimulatedTime()}] Running simulation...`);
-  console.log(`📊 Current Mode: ${currentMode} (Reading ${readingCounter + 1})`);
+  console.log(`📊 Current Mode: ${currentMode} (Timer: ${modeTimer} min)`);
+  console.log(`🌙 Night Time: ${isNightTime() ? 'Yes' : 'No'}`);
 
-  // Generate and send data BEFORE deciding next mode
+  // Decide operating mode
+  decideMode();
+
+  // Generate and send data
   const sensorData = generateSensorData();
   await sendData(sensorData);
-
-  // Decide next operating mode
-  decideMode();
 
   // Advance simulated time
   advanceTime();
@@ -198,7 +212,6 @@ async function simulationLoop() {
  */
 function startSimulator() {
   console.log('🚀 Water Monitoring Sensor Simulator Started');
-  console.log('🎯 DEMO MODE: Cycling through Normal → Alert patterns');
   console.log(`📡 Sending data to: ${API_URL}`);
   console.log(`⏱️  Interval: ${INTERVAL_MS / 1000} seconds`);
   console.log(`🕐 Starting simulation at: ${getSimulatedTime()}`);
@@ -207,10 +220,6 @@ function startSimulator() {
   // Set initial time to 00:00
   simulatedHour = 0;
   simulatedMinute = 0;
-
-  // Initialize with random normal readings target
-  normalReadingsTarget = randomInt(3, 4);
-  console.log(`📋 Starting with ${normalReadingsTarget} normal readings\n`);
 
   // Run immediately
   simulationLoop();
