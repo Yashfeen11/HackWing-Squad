@@ -113,11 +113,15 @@ The system is designed to handle real-world constraints:
 Path: Round-2/Scalability-and-Failures/system-failures.md
 
 ### 🧪 PROTOTYPE & DEMO
+![UI](/Round-2/UI.png)
+
+  > For full demo refer to the readme the 4.storage-dashboard/server
 ---
 
 #### Simulator:
 - Generates active telemetry
 - Enables real-time testing scenarios
+- To run simulator refer to the readme in 4.storage-dashboard/server
 
 #### Backend:
 - Express.js server
@@ -132,6 +136,10 @@ Path: Round-2/Scalability-and-Failures/system-failures.md
   - System health metrics
 
 ### 👥 TEAM & COLLABORATION
+  - Folder 1 - Jaanvi
+  - Folder 2 - Yashfeen [ Leader ]
+  - Folder 3 - Narendra
+  - Folder 4 - Premraj
 ---
 
 #### Workflow:
