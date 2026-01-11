@@ -7,7 +7,7 @@ const axios = require('axios');
 // Configuration
 const API_URL = 'http://localhost:5000/api/readings';
 // const INTERVAL_MS = 60000; // 1 minute
-const INTERVAL_MS = 10000/5; // 4 seconds (uncomment for faster demo)
+const INTERVAL_MS = 10000/2; // 5 seconds (uncomment for faster demo)
 const ZONES = ['Zone A', 'Zone B', 'Zone C', 'Zone D'];
 
 // Demo cycle configuration
