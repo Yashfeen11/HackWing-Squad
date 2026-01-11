@@ -1,5 +1,6 @@
 // scenarios/leakage.js
 // Defines CONTINUOUS leakage behavior
+// Leakage= Continous loss + Pressure Drop
 
 function leakageScenario(randomInRange) {
   // Inlet is present

@@ -1,6 +1,8 @@
 // scenarios/theft.js
 // Defines SUDDEN unauthorized usage (theft)
 
+const { addVariation, randomInRange } = require('../utils/random');
+
 function theftScenario(BASE_INLET, BASE_PRESSURE, randomInRange, addVariation) {
   // Sudden spike in inlet
   const inletFlow = addVariation(BASE_INLET + 100, 15);

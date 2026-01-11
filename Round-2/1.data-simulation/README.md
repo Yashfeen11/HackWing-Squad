@@ -155,3 +155,4 @@ Each simulation cycle produces structured JSON data:
   "confidence": "High"
 }
 ```
+

@@ -3,7 +3,7 @@
 
 function normalScenario(BASE_INLET, BASE_PRESSURE, randomInRange, addVariation) {
   // Inlet with small variation
-  const inletFlow = addVariation(BASE_INLET, 10);
+  const inletFlow = addVariation(BASE_INLET, 8);
 
   // Small unavoidable loss (2–5%)
   const outletFlow = inletFlow * randomInRange(0.95, 0.98);

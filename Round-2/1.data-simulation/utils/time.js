@@ -44,6 +44,8 @@ function resetTime() {
   minute = 0;
 }
 
+/** Export all time-related functions */
+
 module.exports = {
   getTime,
   advanceTime,
