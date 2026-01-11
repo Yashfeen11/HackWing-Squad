@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Water Monitoring Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header>
+        <h1>Smart Water Monitoring System</h1>
+        <p>Real-time Leakage & Theft Detection</p>
+      </header>
+
+      <!-- Alert Box -->
+      <div id="alert-box" class="alert-box hidden">
+        <strong>⚠️ Alert:</strong> <span id="alert-message"></span>
+      </div>
+
+      <!-- Current Status Card -->
+      <div class="card">
+        <h2>Current Status</h2>
+        <div class="status-grid">
+          <div class="status-item">
+            <span class="label">Zone:</span>
+            <span id="zone" class="value">-</span>
+          </div>
+          <div class="status-item">
+            <span class="label">Status:</span>
+            <span id="status" class="value">-</span>
+          </div>
+          <div class="status-item">
+            <span class="label">Confidence:</span>
+            <span id="confidence" class="value">-</span>
+          </div>
+          <div class="status-item">
+            <span class="label">Last Update:</span>
+            <span id="timestamp" class="value">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sensor Readings Card -->
+      <div class="card">
+        <h2>Sensor Readings</h2>
+        <div class="readings-grid">
+          <div class="reading-item">
+            <div class="reading-label">Inlet Flow</div>
+            <div id="inlet-flow" class="reading-value">0</div>
+            <div class="reading-unit">L/min</div>
+          </div>
+          <div class="reading-item">
+            <div class="reading-label">Outlet Flow</div>
+            <div id="outlet-flow" class="reading-value">0</div>
+            <div class="reading-unit">L/min</div>
+          </div>
+          <div class="reading-item">
+            <div class="reading-label">Pressure</div>
+            <div id="pressure" class="reading-value">0</div>
+            <div class="reading-unit">PSI</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Table Card -->
+      <div class="card">
+        <h2>Recent History</h2>
+        <div class="table-container">
+          <table id="history-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Zone</th>
+                <th>Inlet</th>
+                <th>Outlet</th>
+                <th>Pressure</th>
+                <th>Status</th>
+                <th>Confidence</th>
+              </tr>
+            </thead>
+            <tbody id="history-body">
+              <tr>
+                <td colspan="7" style="text-align: center">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Refresh Button -->
+      <button id="refresh-btn" class="refresh-btn">🔄 Refresh Data</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
