@@ -1,7 +1,9 @@
 // notificationHandler.js
-// Handles different notification channels (console, email, SMS, etc.)
+// Handles different notification channels (console, email, SMS, Telegram, etc.)
 
 const { ALERT_LEVELS } = require('./alertManager');
+const telegramNotifier = require('./telegramNotifier');
+const config = require('./config');
 
 /**
  * Send console notification (always available)
@@ -83,6 +85,43 @@ function logAlertToFile(alert) {
 }
 
 /**
+ * Send Telegram notification
+ *
+ * @param {Object} alert - Alert object
+ * @returns {Promise} Telegram send promise
+ */
+async function sendTelegramNotification(alert) {
+  if (!config.alerts.channels.telegram.enabled) {
+    return Promise.resolve();
+  }
+
+  if (!telegramNotifier.isEnabled()) {
+    console.log('⚠️  [TELEGRAM] Not configured - skipping');
+    return Promise.resolve();
+  }
+
+  // Check if we should send based on criticalOnly setting
+  const criticalOnly = config.alerts.channels.telegram.criticalOnly;
+  if (criticalOnly && alert.alertLevel !== ALERT_LEVELS.CRITICAL) {
+    return Promise.resolve();
+  }
+
+  // Send to Telegram
+  try {
+    const result = await telegramNotifier.sendAlert(alert);
+    if (result.success) {
+      console.log('📱 [TELEGRAM] Alert sent successfully');
+    } else {
+      console.log('⚠️  [TELEGRAM] Failed to send alert:', result.error || result.reason);
+    }
+    return result;
+  } catch (error) {
+    console.error('❌ [TELEGRAM] Error:', error.message);
+    return { success: false, error: error.message };
+  }
+}
+
+/**
  * Send alert through all appropriate channels
  *
  * @param {Object} alert - Alert object
@@ -93,6 +132,11 @@ async function sendNotifications(alert) {
 
   // Log to file for audit trail
   logAlertToFile(alert);
+
+  // Send Telegram notification for critical and warning alerts
+  if (alert.alertLevel === ALERT_LEVELS.CRITICAL || alert.alertLevel === ALERT_LEVELS.WARNING) {
+    await sendTelegramNotification(alert);
+  }
 
   // Send email for critical and warning alerts
   if (alert.alertLevel === ALERT_LEVELS.CRITICAL || alert.alertLevel === ALERT_LEVELS.WARNING) {
@@ -109,6 +153,7 @@ module.exports = {
   sendConsoleNotification,
   sendEmailNotification,
   sendSMSNotification,
+  sendTelegramNotification,
   logAlertToFile,
   sendNotifications
 };

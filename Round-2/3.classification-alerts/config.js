@@ -45,6 +45,14 @@ module.exports = {
     channels: {
       console: true,              // Always log to console
       file: true,                 // Always log to file
+      telegram: {
+        enabled: true,            // Enable Telegram notifications
+        criticalOnly: false,      // Send for critical and warnings
+        silentWarnings: true,     // Warnings are silent, critical alerts have sound
+        // Set via environment variables:
+        // TELEGRAM_BOT_TOKEN - Your bot token from @BotFather
+        // TELEGRAM_CHAT_ID - Your chat/group ID
+      },
       email: {
         enabled: false,           // Enable when email service configured
         criticalOnly: false,      // Send for critical and warnings
